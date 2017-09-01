@@ -11,17 +11,7 @@ from PIL import Image
 USER_NAME = os.getenv("USER")
 SWITCH_FILE_NAME = '.opened'
 
-#EXPECTED_VIDEO_TYPES = ['m2ts', 'mp4']
-
-# SOURCE_PATH_STRINGS = [
-#     '/media/{user_name}/disk/DCIM/100MSDCF/'.format(user_name=USER_NAME),
-#     '/home/{user_name}/experiments/Camera/'.format(user_name=USER_NAME),
-# ]
-
 IMAGE_DATETIME_EXIF_KEYS = [36867, 36868, 306]
-
-# TARGET_PATH_STR = '/home/{}/Pictures/photos/'.format(USER_NAME)
-#TARGET_PATH_STR = '/home/{user_name}/experiments/target/'.format(user_name=USER_NAME)
 
 CONFIG_STRUCTURE = {
     'Paths': [
