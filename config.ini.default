@@ -1,0 +1,6 @@
+[Paths]
+SourcePaths: /media/{user_name}/disk/DCIM/100MSDCF/,/home/{user_name}/experiments/Camera/
+TargetPath: /home/{user_name}/experiments/abc/
+
+[Video]
+VideoTypes: m2ts,mp4
