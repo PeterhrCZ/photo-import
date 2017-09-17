@@ -33,9 +33,14 @@ def assert_config(config_file):
                 raise Exception('Item {}.{} is missing in config.ini'.format(section, config_item))
 
 
+def get_config_file_path():
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini')
+
+
 def get_configuration():
     config_file = configparser.ConfigParser()
-    config_file.read('config.ini')
+    if not config_file.read(get_config_file_path()):
+        raise Exception('File config.ini does not exist in project root directory')
     assert_config(config_file)
     return config_file
 
@@ -49,7 +54,10 @@ def get_source_paths():
 
 
 def get_target_path():
-    return config['Paths']['TargetPath'].format(user_name=USER_NAME)
+    path_str = config['Paths']['TargetPath'].format(user_name=USER_NAME)
+    if not Path(path_str).is_dir():
+        raise Exception('Target path {} does not exist'.format(path_str))
+    return path_str
 
 
 def get_supported_video_file_types():
@@ -119,6 +127,8 @@ def main():
             log('Path {} is not available'.format(src_path_str))
             continue
 
+        target_path = get_target_path()
+
         for media_file_path in card_path.glob('*'):
 
             media_file_path_string = str(media_file_path)
@@ -135,19 +145,19 @@ def main():
 
             date_folder_name = str(date_taken)
 
-            target_year_folder = Path(get_target_path() + str(date_taken.year))
+            target_year_folder = Path(os.path.join(target_path, str(date_taken.year)))
             if not target_year_folder.is_dir():
                 target_year_folder.mkdir()
 
-            target_date_folder = Path(str(target_year_folder) + '/' + date_folder_name)
-            switch_file_path = Path(str(target_date_folder) + '/' + SWITCH_FILE_NAME)
+            target_date_folder = Path(os.path.join(str(target_year_folder), date_folder_name))
+            switch_file_path = Path(os.path.join(str(target_date_folder), SWITCH_FILE_NAME))
             if not target_date_folder.is_dir():
                 target_date_folder.mkdir()
                 switch_file_path.touch()
 
             if switch_file_path.exists():
 
-                target_media_file_path = Path(str(target_date_folder) + '/' + media_file_path.name)
+                target_media_file_path = Path(os.path.join(str(target_date_folder), media_file_path.name))
                 if target_media_file_path.exists():
                     log('The file {} already exists'.format(str(target_media_file_path)))
                     continue
