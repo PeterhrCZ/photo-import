@@ -23,3 +23,7 @@ Three items have to be included in the config file:
 by column
 * target folder - existing path for newly organized pictures are to be copied
 * video types - suffixes of video files which are to be imported 
+
+## Dependecies
+
+Pillow: https://pillow.readthedocs.io/en/latest/
