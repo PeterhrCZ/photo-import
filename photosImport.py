@@ -170,12 +170,14 @@ def main():
 
 
 def is_video(media_file_path):
+    if not os.path.isfile(media_file_path):
+        return False
     file_type = get_file_type(media_file_path)
     return file_type in get_supported_video_file_types()
 
 
 def is_picture(media_file):
-    return bool(imghdr.what(media_file))
+    return os.path.isfile(media_file) and bool(imghdr.what(media_file))
 
 
 if __name__ == "__main__":
